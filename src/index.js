@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Redux from './redux';
+import Locale from './locales';
+import Router from './router';
 import registerServiceWorker from './utils/serviceworker/registerServiceWorker';
 
 /**
@@ -16,7 +18,9 @@ import registerServiceWorker from './utils/serviceworker/registerServiceWorker';
   const ROOT = document.getElementById('root');
   const App = () =>
     (<Redux>
-
+      <Locale>
+        <Router />
+      </Locale>
     </Redux>);
   ReactDOM.render(<App />, ROOT);
   registerServiceWorker();
