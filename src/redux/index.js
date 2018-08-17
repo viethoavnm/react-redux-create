@@ -9,10 +9,10 @@ import configureStore from './configureStore';
 
 export const store = configureStore();
 
-const Redux = ({ children }) => (
+const ReduxWrapper = ({ children }) => (
   <Provider store={store}>
     {React.Children.only(children)}
   </Provider>
 );
 
-export default Redux;
+export default ReduxWrapper;

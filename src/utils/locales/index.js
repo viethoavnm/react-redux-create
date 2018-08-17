@@ -1,22 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import dfInject from 'react-intl/locale-data/en';
-import dfMessages from './en.json';
 
+const dfMessages = require('./en.json');
+const dfLocale = require('react-intl/locale-data/en');
 export const DEFAULT_LANGUAGE = 'en';
+
 export const LANGUAGE = 'lang';
 export const ASSETS_PATH = './';
 
-class Intl extends React.Component {
+class IntlWrapper extends React.Component {
   constructor(props) {
     super(props);
-    addLocaleData(dfInject);
+    addLocaleData(dfLocale);
     this.state = {
       locale: DEFAULT_LANGUAGE,
       messages: dfMessages
     }
-    this.loadLocale(props.lang);
+    if (props.lang !== DEFAULT_LANGUAGE)
+      this.loadLocale(props.lang);
   }
 
   async loadLocale(lang) {
@@ -27,17 +29,15 @@ class Intl extends React.Component {
       messages = await import(`${ASSETS_PATH + locale}.json`);
     } catch (e) {
       locale = DEFAULT_LANGUAGE;
-      intl = await import(`react-intl/locale-data/${locale}`);
-      addLocaleData(intl);
-      messages = await import(`${ASSETS_PATH + locale}.json`);
+      messages = dfMessages;
     }
     this.setState({ locale, messages });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (JSON.stringify(nextState.messages) !== JSON.stringify(this.state.messages))
-      return true;
-    return nextState.locale !== this.state.locale;
+  componentDidUpdate(prevState, prevProps) {
+    if (this.props.lang !== prevProps.lang) {
+      this.loadLocale(this.props.lang);
+    }
   }
 
   render() {
@@ -47,4 +47,4 @@ class Intl extends React.Component {
   }
 }
 
-export default connect((state) => ({ lang: state.common.locale }))(Intl);
+export default connect((state) => ({ lang: state.common.locale }))(IntlWrapper);

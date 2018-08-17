@@ -5,9 +5,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Redux from './redux';
-import Locale from './locales';
+import ReduxProvider from './redux';
 import Router from './router';
+import IntlProvider from './utils/locales';
 import registerServiceWorker from './utils/serviceworker/registerServiceWorker';
 
 /**
@@ -17,11 +17,11 @@ import registerServiceWorker from './utils/serviceworker/registerServiceWorker';
 (function starting() {
   const ROOT = document.getElementById('root');
   const App = () =>
-    (<Redux>
-      <Locale>
+    (<ReduxProvider>
+      <IntlProvider>
         <Router />
-      </Locale>
-    </Redux>);
+      </IntlProvider>
+    </ReduxProvider>);
   ReactDOM.render(<App />, ROOT);
   registerServiceWorker();
 })();
