@@ -13,7 +13,8 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "source-map-explorer": "^1.6.0"
   },
   "devDependencies": {
     "eslint": "4.19.1",
@@ -31,6 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "analyze": "source-map-explorer build/static/js/main.*",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
